@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">G聊</string>
+    <string name="action_sign_in">登录</string>
+    <string name="prompt_email">用户名</string>
+    <string name="prompt_password">密码</string>
+    <string name="title_activity_welcome">欢迎</string>
+    <string name="action_sign_in_complete">注销</string>
+    <string name="action_sign_in_progress">正在登录..</string>
+    <string name="user_name_null_warning">用户名不能为空</string>
+    <string name="login_error_message">登录失败 ：%s</string>
+    <string name="start_error">启动G聊失败：%s</string>
+    <string name="action_sign_in_error">登录失败</string>
+    <string name="logoff_error">注销失败: %s</string>
+    <string name="user_state_error_notify">用户状态错误：%s</string>
+    <string name="query_chat_list_error">获取聊天列表失败：%s</string>
+    <string name="chatroom_add">新建</string>
+    <string name="user_logoff">注销</string>
+    <string name="send_message">发送</string>
+    <string name="error_send_message">发送消息失败：%s</string>
+</resources>
