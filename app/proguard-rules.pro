@@ -15,3 +15,29 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+-keepattributes *Annotation*,Signature
+-keep,allowobfuscation @interface org.robobinding.annotation.PresentationModel
+
+-keep @org.robobinding.annotation.PresentationModel class * {
+    public *** *(...);
+}
+
+-keep class * implements org.robobinding.itempresentationmodel.ItemPresentationModel{
+    public *** *(...);
+}
+
+-keepclassmembers class * implements org.robobinding.viewattribute.ViewListeners {
+    public <init>(...);
+}
+
+-keep class * extends org.robobinding.presentationmodel.AbstractPresentationModelObject{
+    public <init>(...);
+}
+
+-keep class * extends org.robobinding.presentationmodel.AbstractItemPresentationModelObject{
+    public <init>(...);
+}
+
+-dontwarn javax.annotation.**
