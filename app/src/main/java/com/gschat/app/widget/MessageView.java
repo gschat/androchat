@@ -89,7 +89,7 @@ public class MessageView extends LinearLayout{
 
             logger.debug("set align to left");
 
-            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,0);
 
             sideLayout.setLayoutParams(layoutParams);
         }
