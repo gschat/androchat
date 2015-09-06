@@ -96,6 +96,9 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
     private boolean sendMessageFlag;
 
 
+    private MessageType messageType;
+
+
     /*
      * create ChatRoom ViewModel
      * @param name
@@ -105,6 +108,13 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
         this.view = view;
 
         this.name = name;
+
+        if ("100".equals(name)) {
+            messageType = MessageType.Multi;
+        } else {
+            messageType = MessageType.Single;
+        }
+
         this.cachedSize = cachedSize;
     }
 
@@ -314,7 +324,7 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
         final GSImage image = new GSImage(gsChat,file);
 
         final GSMessage msg = new GSMessage(image)
-                .setType(MessageType.Single)
+                .setType(messageType)
                 .setTarget(name)
                 .setDirect(GSDirect.To);
 
@@ -397,7 +407,7 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
 
     private void sendMessage() {
         GSMessage msg = new GSMessage(new GSText(this.textMessage))
-                .setType(MessageType.Single)
+                .setType(messageType)
                 .setTarget(this.name)
                 .setDirect(GSDirect.To);
 
