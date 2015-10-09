@@ -593,6 +593,8 @@ abstract class TcpChannel implements Net, Dispatcher {
 
                 message.setContent(cipher.doFinal(message.getContent()));
 
+                logger.trace("received message {}",message.getCode());
+
                 dispatch(message);
             }
 

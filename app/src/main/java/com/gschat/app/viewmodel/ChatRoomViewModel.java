@@ -1,10 +1,13 @@
 package com.gschat.app.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -93,6 +96,9 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
     private boolean sendMessageFlag;
 
 
+    private MessageType messageType;
+
+
     /*
      * create ChatRoom ViewModel
      * @param name
@@ -102,6 +108,13 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
         this.view = view;
 
         this.name = name;
+
+        if ("100".equals(name)) {
+            messageType = MessageType.Multi;
+        } else {
+            messageType = MessageType.Single;
+        }
+
         this.cachedSize = cachedSize;
     }
 
@@ -270,8 +283,8 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
         } else {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            this.view.startActivityForResult(Intent.createChooser(intent, "Select Picture"), SEND_IMG);
+            intent.setType("image/jpg");
+            this.view.startActivityForResult(intent, SEND_IMG);
         }
     }
 
@@ -279,7 +292,7 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
 
         logger.debug("onActivityResult ");
 
-        if(requestCode != requestCode) {
+        if(requestCode != SEND_IMG) {
             return;
         }
 
@@ -291,16 +304,27 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
 
         File file;
 
+
         if("content".equals(data.getScheme())){
             file = uriToFile(data);
         } else {
             file = new File(data.getPath());
         }
 
+        if (file == null) {
+
+            Toast.makeText(
+                    view.getContext(),
+                    String.format(view.getContext().getString(R.string.error_send_message),"can't load image:" + data),
+                    Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
         final GSImage image = new GSImage(gsChat,file);
 
         final GSMessage msg = new GSMessage(image)
-                .setType(MessageType.Single)
+                .setType(messageType)
                 .setTarget(name)
                 .setDirect(GSDirect.To);
 
@@ -350,6 +374,8 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
 
     }
 
+
+
     private File uriToFile(Uri data) {
 
         String[] projection = { MediaStore.Images.Media.DATA };
@@ -357,10 +383,17 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
         Cursor cursor = view.getContext().getContentResolver().query(data, projection, null, null, null);
 
         try {
-            int actual_image_column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
             cursor.moveToFirst();
 
-            String img_path = cursor.getString(actual_image_column_index);
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+
+            String img_path = cursor.getString(columnIndex);
+
+            if (img_path == null) {
+                return null;
+            }
+
             return new File(img_path);
 
         } finally {
@@ -374,7 +407,7 @@ public class ChatRoomViewModel implements HasPresentationModelChangeSupport {
 
     private void sendMessage() {
         GSMessage msg = new GSMessage(new GSText(this.textMessage))
-                .setType(MessageType.Single)
+                .setType(messageType)
                 .setTarget(this.name)
                 .setDirect(GSDirect.To);
 
