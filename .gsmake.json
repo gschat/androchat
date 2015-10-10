@@ -1,0 +1,21 @@
+{
+    "name":"github.com/gschat/androchat",
+
+    "domain":"gslang",
+
+    "import" : [
+        {"name" : "github.com/gsrpc/gsrpc","domain":"task|gslang","version":"release/v1.0"},
+        {"name" : "github.com/gschat/gschat","domain":"gslang","version":"develop"}
+    ],
+
+
+    "properties":{
+        "gsrpc":{
+            "main":["github.com/gsrpc/gsrpc","github.com/gschat/gschat/gschat.gs"]
+        },
+
+        "jvmrpc":{
+            "main":"./sdk/src/main/java"
+        }
+    }
+}

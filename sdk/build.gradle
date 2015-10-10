@@ -34,5 +34,5 @@ dependencies {
     compile 'io.realm:realm-android:0.82.1'
     compile 'com.github.tony19:logback-android-classic:1.1.1-4'
     compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'com.github.gsrpc:jvmrpc:v0.0.1'
+    compile 'com.github.gsrpc:jvmrpc:v0.0.1.1'
 }
