@@ -11,7 +11,7 @@
 
     "properties":{
         "gsrpc":{
-            "main":["github.com/gsrpc/gsrpc","github.com/gschat/gschat/gschat.gs"]
+            "main":["github.com/gschat/gschat/gschat.gs"]
         },
 
         "jvmrpc":{
