@@ -36,7 +36,7 @@ dependencies {
     compile 'com.github.tony19:logback-android-classic:1.1.1-4'
     compile 'org.slf4j:slf4j-api:1.7.12'
     // add gsrpc support
-    compile 'com.github.gsrpc:jvmrpc:v0.0.3'
+    compile 'com.github.gsrpc:jvmrpc:v0.1.0-alpha'
     // junit test support
     testCompile 'junit:junit:4.12'
     // instrumentation support
