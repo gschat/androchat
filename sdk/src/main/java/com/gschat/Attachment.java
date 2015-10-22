@@ -37,20 +37,55 @@ public class Attachment
         this.content = arg;
     }
 
-    public void Marshal(Writer writer)  throws Exception
+    public void marshal(Writer writer)  throws Exception
     {
+        writer.writeByte((byte)2);
 
-        type.Marshal(writer);
+        writer.writeByte((byte)com.gsrpc.Tag.I8.getValue());
+        type.marshal(writer);
 
-        writer.WriteBytes(content);
+        writer.writeByte((byte)((com.gsrpc.Tag.I8.getValue() << 4)|com.gsrpc.Tag.List.getValue()));
+        writer.writeBytes(content);
 
     }
-    public void Unmarshal(Reader reader) throws Exception
+    public void unmarshal(Reader reader) throws Exception
     {
+        byte __fields = reader.readByte();
+        
+        {
+            byte tag = reader.readByte();
 
-        type = AttachmentType.Unmarshal(reader);
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                type = AttachmentType.unmarshal(reader);
+            }
 
-        content = reader.ReadBytes();
+            if(-- __fields == 0) {
+                return;
+            }
+        }
 
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                content = reader.readBytes();
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        for(int i = 0; i < (int)__fields; i ++) {
+            byte tag = reader.readByte();
+
+            if (tag == com.gsrpc.Tag.Skip.getValue()) {
+                continue;
+            }
+
+            reader.readSkip(tag);
+        }
     }
 }

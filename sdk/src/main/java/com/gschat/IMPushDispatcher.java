@@ -30,14 +30,13 @@ public final class IMPushDispatcher implements com.gsrpc.Dispatcher {
 
 					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[0].getContent());
 
-					arg0 = reader.ReadBytes();
+					arg0 = reader.readBytes();
 
 				}
 
 
-
-                try{
-                    this.service.Register(arg0);
+                
+                    this.service.register(arg0);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
                     callReturn.setID(call.getID());
@@ -48,16 +47,13 @@ public final class IMPushDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
-                } catch(Exception e){
-                    
-                }
+                
             }
         
         case 1: {
 
-
-                try{
-                    this.service.Unregister();
+                
+                    this.service.unregister();
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
                     callReturn.setID(call.getID());
@@ -68,9 +64,7 @@ public final class IMPushDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
-                } catch(Exception e){
-                    
-                }
+                
             }
         
         }

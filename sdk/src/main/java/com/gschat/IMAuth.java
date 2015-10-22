@@ -10,9 +10,9 @@ import java.nio.ByteBuffer;
 
 public interface IMAuth {
 
-    Property[] Login (String username, Property[] properties) throws Exception;
+    Property[] login (String username, Property[] properties) throws Exception;
 
-    void Logoff (Property[] properties) throws Exception;
+    void logoff (Property[] properties) throws Exception;
 
 }
 

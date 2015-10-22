@@ -7,11 +7,11 @@ import com.gsrpc.Reader;
 import java.nio.ByteBuffer;
 
 
-public class UserAuthFailedException extends Exception
+public class ResourceNotFoundException extends Exception
 {
 
 
-    public UserAuthFailedException() {
+    public ResourceNotFoundException() {
     
     }
 

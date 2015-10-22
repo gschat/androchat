@@ -1,10 +1,10 @@
 package com.gschat;
 
+import com.gsrpc.Writer;
+
 import com.gsrpc.Reader;
 
 import java.nio.ByteBuffer;
-
-import com.gsrpc.Writer;
 
 
 /*
@@ -33,18 +33,18 @@ public enum MailType {
             return "System";
         
         }
-        return String.format("MailType#%d",this.value);
+        return "MailType#" + this.value;
     }
     public byte getValue() {
         return this.value;
     }
-    public void Marshal(Writer writer) throws Exception
+    public void marshal(Writer writer) throws Exception
     {
-         writer.WriteByte(getValue()); 
+         writer.writeByte(getValue()); 
     }
-    public static MailType Unmarshal(Reader reader) throws Exception
+    public static MailType unmarshal(Reader reader) throws Exception
     {
-        byte code =   reader.ReadByte(); 
+        byte code =   reader.readByte(); 
         switch(code)
         {
         

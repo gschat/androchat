@@ -1,10 +1,10 @@
 package com.gschat;
 
-import java.nio.ByteBuffer;
-
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
+
+import java.nio.ByteBuffer;
 
 
 /*
@@ -114,52 +114,144 @@ public class Mail
         this.extension = arg;
     }
 
-    public void Marshal(Writer writer)  throws Exception
+    public void marshal(Writer writer)  throws Exception
     {
+        writer.writeByte((byte)9);
 
-        writer.WriteString(mailID);
+        writer.writeByte((byte)com.gsrpc.Tag.String.getValue());
+        writer.writeString(mailID);
 
-        writer.WriteUInt32(sQID);
+        writer.writeByte((byte)com.gsrpc.Tag.I32.getValue());
+        writer.writeUInt32(sQID);
 
-        writer.WriteUInt64(tS);
+        writer.writeByte((byte)com.gsrpc.Tag.I64.getValue());
+        writer.writeUInt64(tS);
 
-        writer.WriteString(sender);
+        writer.writeByte((byte)com.gsrpc.Tag.String.getValue());
+        writer.writeString(sender);
 
-        writer.WriteString(receiver);
+        writer.writeByte((byte)com.gsrpc.Tag.String.getValue());
+        writer.writeString(receiver);
 
-        type.Marshal(writer);
+        writer.writeByte((byte)com.gsrpc.Tag.I8.getValue());
+        type.marshal(writer);
 
-        writer.WriteString(content);
+        writer.writeByte((byte)com.gsrpc.Tag.String.getValue());
+        writer.writeString(content);
 
-        writer.WriteUInt16((short)attachments.length);
+        writer.writeByte((byte)((com.gsrpc.Tag.Table.getValue() << 4)|com.gsrpc.Tag.List.getValue()));
+        writer.writeUInt16((short)attachments.length);
 
 		for(Attachment v3 : attachments){
 
-			v3.Marshal(writer);
+			v3.marshal(writer);
 
 		}
 
-        writer.WriteBytes(extension);
+        writer.writeByte((byte)((com.gsrpc.Tag.I8.getValue() << 4)|com.gsrpc.Tag.List.getValue()));
+        writer.writeBytes(extension);
 
     }
-    public void Unmarshal(Reader reader) throws Exception
+    public void unmarshal(Reader reader) throws Exception
     {
+        byte __fields = reader.readByte();
+        
+        {
+            byte tag = reader.readByte();
 
-        mailID = reader.ReadString();
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                mailID = reader.readString();
+            }
 
-        sQID = reader.ReadUInt32();
+            if(-- __fields == 0) {
+                return;
+            }
+        }
 
-        tS = reader.ReadUInt64();
+        
+        {
+            byte tag = reader.readByte();
 
-        sender = reader.ReadString();
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                sQID = reader.readUInt32();
+            }
 
-        receiver = reader.ReadString();
+            if(-- __fields == 0) {
+                return;
+            }
+        }
 
-        type = MailType.Unmarshal(reader);
+        
+        {
+            byte tag = reader.readByte();
 
-        content = reader.ReadString();
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                tS = reader.readUInt64();
+            }
 
-        int max3 = reader.ReadUInt16();
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                sender = reader.readString();
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                receiver = reader.readString();
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                type = MailType.unmarshal(reader);
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                content = reader.readString();
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                int max3 = reader.readUInt16();
 
 		attachments = new Attachment[max3];
 
@@ -167,13 +259,40 @@ public class Mail
 
 			Attachment v3 = new Attachment();
 
-			v3.Unmarshal(reader);
+			v3.unmarshal(reader);
 
 			attachments[i3] = v3;
 
 		}
+            }
 
-        extension = reader.ReadBytes();
+            if(-- __fields == 0) {
+                return;
+            }
+        }
 
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                extension = reader.readBytes();
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        for(int i = 0; i < (int)__fields; i ++) {
+            byte tag = reader.readByte();
+
+            if (tag == com.gsrpc.Tag.Skip.getValue()) {
+                continue;
+            }
+
+            reader.readSkip(tag);
+        }
     }
 }

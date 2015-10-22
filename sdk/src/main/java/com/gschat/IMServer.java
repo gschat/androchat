@@ -1,18 +1,20 @@
 package com.gschat;
 
+import com.gsrpc.Writer;
+
 import com.gsrpc.Reader;
 
 import java.nio.ByteBuffer;
-
-import com.gsrpc.Writer;
 
 
 
 public interface IMServer {
 
-    long Put (Mail mail) throws Exception;
+    int prepare () throws Exception;
 
-    void Pull (int offset) throws Exception;
+    long put (Mail mail) throws Exception;
+
+    void pull (int offset) throws Exception;
 
 }
 

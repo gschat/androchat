@@ -1,10 +1,10 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
-
-import java.nio.ByteBuffer;
 
 
 /*
@@ -28,7 +28,7 @@ public final class IMAuthRPC {
     }
 
     
-    public com.gsrpc.Future<Property[]> Login(String arg0, Property[] arg1, final int timeout) throws Exception {
+    public com.gsrpc.Future<Property[]> login(String arg0, Property[] arg1, final int timeout) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 
@@ -42,7 +42,7 @@ public final class IMAuthRPC {
 
 			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-			writer.WriteString(arg0);
+			writer.writeString(arg0);
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
@@ -56,11 +56,11 @@ public final class IMAuthRPC {
 
 			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-			writer.WriteUInt16((short)arg1.length);
+			writer.writeUInt16((short)arg1.length);
 
 		for(Property v3 : arg1){
 
-			v3.Marshal(writer);
+			v3.marshal(writer);
 
 		}
 
@@ -95,7 +95,7 @@ public final class IMAuthRPC {
 
                             UserNotFoundException exception = new UserNotFoundException();
 
-                            exception.Unmarshal(reader);
+                            exception.unmarshal(reader);
 
                             Notify(exception,null);
 
@@ -107,7 +107,7 @@ public final class IMAuthRPC {
 
                             UserAuthFailedException exception = new UserAuthFailedException();
 
-                            exception.Unmarshal(reader);
+                            exception.unmarshal(reader);
 
                             Notify(exception,null);
 
@@ -127,7 +127,7 @@ public final class IMAuthRPC {
 
 						com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(callReturn.getContent());
 
-						int max6 = reader.ReadUInt16();
+						int max6 = reader.readUInt16();
 
 					returnParam = new Property[max6];
 
@@ -135,7 +135,7 @@ public final class IMAuthRPC {
 
 						Property v6 = new Property();
 
-						v6.Unmarshal(reader);
+						v6.unmarshal(reader);
 
 						returnParam[i6] = v6;
 
@@ -157,7 +157,7 @@ public final class IMAuthRPC {
         return promise;
     }
     
-    public com.gsrpc.Future<Void> Logoff(Property[] arg0, final int timeout) throws Exception {
+    public com.gsrpc.Future<Void> logoff(Property[] arg0, final int timeout) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 
@@ -171,11 +171,11 @@ public final class IMAuthRPC {
 
 			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-			writer.WriteUInt16((short)arg0.length);
+			writer.writeUInt16((short)arg0.length);
 
 		for(Property v3 : arg0){
 
-			v3.Marshal(writer);
+			v3.marshal(writer);
 
 		}
 

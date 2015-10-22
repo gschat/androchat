@@ -10,9 +10,9 @@ import com.gsrpc.Writer;
 
 public interface IMPush {
 
-    void Register (byte[] pushToken) throws Exception;
+    void register (byte[] pushToken) throws Exception;
 
-    void Unregister () throws Exception;
+    void unregister () throws Exception;
 
 }
 

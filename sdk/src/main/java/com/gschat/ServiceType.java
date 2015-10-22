@@ -45,18 +45,18 @@ public enum ServiceType {
             return "Status";
         
         }
-        return String.format("ServiceType#%d",this.value);
+        return "ServiceType#" + this.value;
     }
     public byte getValue() {
         return this.value;
     }
-    public void Marshal(Writer writer) throws Exception
+    public void marshal(Writer writer) throws Exception
     {
-         writer.WriteByte(getValue()); 
+         writer.writeByte(getValue()); 
     }
-    public static ServiceType Unmarshal(Reader reader) throws Exception
+    public static ServiceType unmarshal(Reader reader) throws Exception
     {
-        byte code =   reader.ReadByte(); 
+        byte code =   reader.readByte(); 
         switch(code)
         {
         

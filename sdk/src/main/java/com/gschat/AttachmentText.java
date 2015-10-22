@@ -26,16 +26,39 @@ public class AttachmentText
         this.text = arg;
     }
 
-    public void Marshal(Writer writer)  throws Exception
+    public void marshal(Writer writer)  throws Exception
     {
+        writer.writeByte((byte)1);
 
-        writer.WriteString(text);
+        writer.writeByte((byte)com.gsrpc.Tag.String.getValue());
+        writer.writeString(text);
 
     }
-    public void Unmarshal(Reader reader) throws Exception
+    public void unmarshal(Reader reader) throws Exception
     {
+        byte __fields = reader.readByte();
+        
+        {
+            byte tag = reader.readByte();
 
-        text = reader.ReadString();
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                text = reader.readString();
+            }
 
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        for(int i = 0; i < (int)__fields; i ++) {
+            byte tag = reader.readByte();
+
+            if (tag == com.gsrpc.Tag.Skip.getValue()) {
+                continue;
+            }
+
+            reader.readSkip(tag);
+        }
     }
 }

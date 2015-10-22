@@ -28,7 +28,7 @@ public final class IMClientRPC {
     }
 
     
-    public com.gsrpc.Future<Void> Push(Mail arg0, final int timeout) throws Exception {
+    public com.gsrpc.Future<Void> push(Mail arg0, final int timeout) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 
@@ -42,7 +42,7 @@ public final class IMClientRPC {
 
 			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-			arg0.Marshal(writer);
+			arg0.marshal(writer);
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
@@ -90,7 +90,7 @@ public final class IMClientRPC {
         return promise;
     }
     
-    public com.gsrpc.Future<Void> Notify(int arg0, final int timeout) throws Exception {
+    public com.gsrpc.Future<Void> notify(int arg0, final int timeout) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 
@@ -104,7 +104,7 @@ public final class IMClientRPC {
 
 			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-			writer.WriteUInt32(arg0);
+			writer.writeUInt32(arg0);
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 

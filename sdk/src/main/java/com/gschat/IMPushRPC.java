@@ -28,7 +28,7 @@ public final class IMPushRPC {
     }
 
     
-    public com.gsrpc.Future<Void> Register(byte[] arg0, final int timeout) throws Exception {
+    public com.gsrpc.Future<Void> register(byte[] arg0, final int timeout) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 
@@ -42,7 +42,7 @@ public final class IMPushRPC {
 
 			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-			writer.WriteBytes(arg0);
+			writer.writeBytes(arg0);
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
@@ -90,7 +90,7 @@ public final class IMPushRPC {
         return promise;
     }
     
-    public com.gsrpc.Future<Void> Unregister(final int timeout) throws Exception {
+    public com.gsrpc.Future<Void> unregister(final int timeout) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 

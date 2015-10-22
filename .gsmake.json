@@ -15,7 +15,9 @@
         },
 
         "jvmrpc":{
-            "main":"./sdk/src/main/java"
+            "main":{
+                "output":"./sdk/src/main/java"
+            }
         }
     }
 }

@@ -10,9 +10,9 @@ import java.nio.ByteBuffer;
 
 public interface IMClient {
 
-    void Push (Mail mail) throws Exception;
+    void push (Mail mail) throws Exception;
 
-    void Notify (int SQID) throws Exception;
+    void notify (int SQID) throws Exception;
 
 }
 

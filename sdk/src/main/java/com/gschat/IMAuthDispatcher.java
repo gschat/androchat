@@ -30,7 +30,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[0].getContent());
 
-					arg0 = reader.ReadString();
+					arg0 = reader.readString();
 
 				}
 
@@ -40,7 +40,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[1].getContent());
 
-					int max5 = reader.ReadUInt16();
+					int max5 = reader.readUInt16();
 
 				arg1 = new Property[max5];
 
@@ -48,7 +48,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 					Property v5 = new Property();
 
-					v5.Unmarshal(reader);
+					v5.unmarshal(reader);
 
 					arg1[i5] = v5;
 
@@ -57,9 +57,10 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 				}
 
 
-
+                
                 try{
-                    Property[] ret = this.service.Login(arg0, arg1);
+                
+                    Property[] ret = this.service.login(arg0, arg1);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
                     callReturn.setID(call.getID());
@@ -73,11 +74,11 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 					com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-					writer.WriteUInt16((short)ret.length);
+					writer.writeUInt16((short)ret.length);
 
 				for(Property v5 : ret){
 
-					v5.Marshal(writer);
+					v5.marshal(writer);
 
 				}
 
@@ -91,38 +92,32 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
-                } catch(Exception e){
-                    
-                    if(e instanceof UserNotFoundException){
+                } catch(UserNotFoundException e) {
 
-                        com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+                    com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-                        ((UserNotFoundException)e).Marshal(writer);
+                    e.marshal(writer);
 
-                        com.gsrpc.Response callReturn = new com.gsrpc.Response();
-                        callReturn.setID(call.getID());
-                        callReturn.setService(call.getService());
-                        callReturn.setException((byte)0);
-                        callReturn.setContent(writer.Content());
+                    com.gsrpc.Response callReturn = new com.gsrpc.Response();
+                    callReturn.setID(call.getID());
+                    callReturn.setService(call.getService());
+                    callReturn.setException((byte)0);
+                    callReturn.setContent(writer.Content());
 
-                        return callReturn;
-                    }
-                    
-                    if(e instanceof UserAuthFailedException){
+                    return callReturn;
+                } catch(UserAuthFailedException e) {
 
-                        com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+                    com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-                        ((UserAuthFailedException)e).Marshal(writer);
+                    e.marshal(writer);
 
-                        com.gsrpc.Response callReturn = new com.gsrpc.Response();
-                        callReturn.setID(call.getID());
-                        callReturn.setService(call.getService());
-                        callReturn.setException((byte)1);
-                        callReturn.setContent(writer.Content());
+                    com.gsrpc.Response callReturn = new com.gsrpc.Response();
+                    callReturn.setID(call.getID());
+                    callReturn.setService(call.getService());
+                    callReturn.setException((byte)1);
+                    callReturn.setContent(writer.Content());
 
-                        return callReturn;
-                    }
-                    
+                    return callReturn;
                 }
             }
         
@@ -133,7 +128,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[0].getContent());
 
-					int max5 = reader.ReadUInt16();
+					int max5 = reader.readUInt16();
 
 				arg0 = new Property[max5];
 
@@ -141,7 +136,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 					Property v5 = new Property();
 
-					v5.Unmarshal(reader);
+					v5.unmarshal(reader);
 
 					arg0[i5] = v5;
 
@@ -150,9 +145,8 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 				}
 
 
-
-                try{
-                    this.service.Logoff(arg0);
+                
+                    this.service.logoff(arg0);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
                     callReturn.setID(call.getID());
@@ -163,9 +157,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
-                } catch(Exception e){
-                    
-                }
+                
             }
         
         }

@@ -49,18 +49,18 @@ public enum AttachmentType {
             return "Customer";
         
         }
-        return String.format("AttachmentType#%d",this.value);
+        return "AttachmentType#" + this.value;
     }
     public byte getValue() {
         return this.value;
     }
-    public void Marshal(Writer writer) throws Exception
+    public void marshal(Writer writer) throws Exception
     {
-         writer.WriteByte(getValue()); 
+         writer.writeByte(getValue()); 
     }
-    public static AttachmentType Unmarshal(Reader reader) throws Exception
+    public static AttachmentType unmarshal(Reader reader) throws Exception
     {
-        byte code =   reader.ReadByte(); 
+        byte code =   reader.readByte(); 
         switch(code)
         {
         

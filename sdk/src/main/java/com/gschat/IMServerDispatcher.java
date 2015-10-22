@@ -1,10 +1,10 @@
 package com.gschat;
 
-import com.gsrpc.Writer;
-
 import com.gsrpc.Reader;
 
 import java.nio.ByteBuffer;
+
+import com.gsrpc.Writer;
 
 
 
@@ -24,20 +24,9 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
         switch(call.getMethod()){
         
         case 0: {
-				Mail arg0 = new Mail();
 
-				{
-
-					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[0].getContent());
-
-					arg0.Unmarshal(reader);
-
-				}
-
-
-
-                try{
-                    long ret = this.service.Put(arg0);
+                
+                    int ret = this.service.prepare();
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
                     callReturn.setID(call.getID());
@@ -51,7 +40,7 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 
 					com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-					writer.WriteUInt64(ret);
+					writer.writeUInt32(ret);
 
 					returnParam = writer.Content();
 
@@ -63,41 +52,95 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
-                } catch(Exception e){
-                    
-                    if(e instanceof UserNotFoundException){
-
-                        com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
-
-                        ((UserNotFoundException)e).Marshal(writer);
-
-                        com.gsrpc.Response callReturn = new com.gsrpc.Response();
-                        callReturn.setID(call.getID());
-                        callReturn.setService(call.getService());
-                        callReturn.setException((byte)0);
-                        callReturn.setContent(writer.Content());
-
-                        return callReturn;
-                    }
-                    
-                }
+                
             }
         
         case 1: {
+				Mail arg0 = new Mail();
+
+				{
+
+					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[0].getContent());
+
+					arg0.unmarshal(reader);
+
+				}
+
+
+                
+                try{
+                
+                    long ret = this.service.put(arg0);
+
+                    com.gsrpc.Response callReturn = new com.gsrpc.Response();
+                    callReturn.setID(call.getID());
+                    callReturn.setService(call.getService());
+                    callReturn.setException((byte)-1);
+
+                    
+    				byte[] returnParam;
+
+				{
+
+					com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+
+					writer.writeUInt64(ret);
+
+					returnParam = writer.Content();
+
+				}
+
+
+                    callReturn.setContent(returnParam);
+                    
+
+                    return callReturn;
+
+                } catch(UserNotFoundException e) {
+
+                    com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+
+                    e.marshal(writer);
+
+                    com.gsrpc.Response callReturn = new com.gsrpc.Response();
+                    callReturn.setID(call.getID());
+                    callReturn.setService(call.getService());
+                    callReturn.setException((byte)0);
+                    callReturn.setContent(writer.Content());
+
+                    return callReturn;
+                } catch(UnexpectSQIDException e) {
+
+                    com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+
+                    e.marshal(writer);
+
+                    com.gsrpc.Response callReturn = new com.gsrpc.Response();
+                    callReturn.setID(call.getID());
+                    callReturn.setService(call.getService());
+                    callReturn.setException((byte)1);
+                    callReturn.setContent(writer.Content());
+
+                    return callReturn;
+                }
+            }
+        
+        case 2: {
 				int arg0 = 0;
 
 				{
 
 					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[0].getContent());
 
-					arg0 = reader.ReadUInt32();
+					arg0 = reader.readUInt32();
 
 				}
 
 
-
+                
                 try{
-                    this.service.Pull(arg0);
+                
+                    this.service.pull(arg0);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
                     callReturn.setID(call.getID());
@@ -108,23 +151,19 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
-                } catch(Exception e){
-                    
-                    if(e instanceof UserNotFoundException){
+                } catch(UserNotFoundException e) {
 
-                        com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+                    com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
 
-                        ((UserNotFoundException)e).Marshal(writer);
+                    e.marshal(writer);
 
-                        com.gsrpc.Response callReturn = new com.gsrpc.Response();
-                        callReturn.setID(call.getID());
-                        callReturn.setService(call.getService());
-                        callReturn.setException((byte)0);
-                        callReturn.setContent(writer.Content());
+                    com.gsrpc.Response callReturn = new com.gsrpc.Response();
+                    callReturn.setID(call.getID());
+                    callReturn.setService(call.getService());
+                    callReturn.setException((byte)0);
+                    callReturn.setContent(writer.Content());
 
-                        return callReturn;
-                    }
-                    
+                    return callReturn;
                 }
             }
         

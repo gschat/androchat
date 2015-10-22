@@ -16,12 +16,23 @@ public class UserNotFoundException extends Exception
     }
 
 
-    public void Marshal(Writer writer)  throws Exception
+    public void marshal(Writer writer)  throws Exception
     {
+        writer.writeByte((byte)0);
 
     }
-    public void Unmarshal(Reader reader) throws Exception
+    public void unmarshal(Reader reader) throws Exception
     {
+        byte __fields = reader.readByte();
 
+        for(int i = 0; i < (int)__fields; i ++) {
+            byte tag = reader.readByte();
+
+            if (tag == com.gsrpc.Tag.Skip.getValue()) {
+                continue;
+            }
+
+            reader.readSkip(tag);
+        }
     }
 }

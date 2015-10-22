@@ -48,24 +48,71 @@ public class AttachmentAudio
         this.duration = arg;
     }
 
-    public void Marshal(Writer writer)  throws Exception
+    public void marshal(Writer writer)  throws Exception
     {
+        writer.writeByte((byte)3);
 
-        writer.WriteString(key);
+        writer.writeByte((byte)com.gsrpc.Tag.String.getValue());
+        writer.writeString(key);
 
-        writer.WriteString(name);
+        writer.writeByte((byte)com.gsrpc.Tag.String.getValue());
+        writer.writeString(name);
 
-        writer.WriteInt16(duration);
+        writer.writeByte((byte)com.gsrpc.Tag.I16.getValue());
+        writer.writeInt16(duration);
 
     }
-    public void Unmarshal(Reader reader) throws Exception
+    public void unmarshal(Reader reader) throws Exception
     {
+        byte __fields = reader.readByte();
+        
+        {
+            byte tag = reader.readByte();
 
-        key = reader.ReadString();
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                key = reader.readString();
+            }
 
-        name = reader.ReadString();
+            if(-- __fields == 0) {
+                return;
+            }
+        }
 
-        duration = reader.ReadInt16();
+        
+        {
+            byte tag = reader.readByte();
 
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                name = reader.readString();
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        {
+            byte tag = reader.readByte();
+
+            if(tag != com.gsrpc.Tag.Skip.getValue()) {
+                duration = reader.readInt16();
+            }
+
+            if(-- __fields == 0) {
+                return;
+            }
+        }
+
+        
+        for(int i = 0; i < (int)__fields; i ++) {
+            byte tag = reader.readByte();
+
+            if (tag == com.gsrpc.Tag.Skip.getValue()) {
+                continue;
+            }
+
+            reader.readSkip(tag);
+        }
     }
 }
