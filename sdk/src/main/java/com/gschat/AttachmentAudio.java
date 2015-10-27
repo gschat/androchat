@@ -1,16 +1,13 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
 
-import java.nio.ByteBuffer;
 
-
-/*
- * AttachmentAudio generate by gs2java,don't modify it manually
- */
-public class AttachmentAudio
+public class AttachmentAudio 
 {
 
     private  String key = "";
@@ -19,6 +16,22 @@ public class AttachmentAudio
 
     private  short duration = 0;
 
+
+
+    public AttachmentAudio(){
+
+    }
+
+
+    public AttachmentAudio(String key, String name, short duration ) {
+    
+        this.key = key;
+    
+        this.name = name;
+    
+        this.duration = duration;
+    
+    }
 
 
     public String getKey()
@@ -48,6 +61,8 @@ public class AttachmentAudio
         this.duration = arg;
     }
 
+
+
     public void marshal(Writer writer)  throws Exception
     {
         writer.writeByte((byte)3);
@@ -65,7 +80,7 @@ public class AttachmentAudio
     public void unmarshal(Reader reader) throws Exception
     {
         byte __fields = reader.readByte();
-        
+
         {
             byte tag = reader.readByte();
 
@@ -78,7 +93,7 @@ public class AttachmentAudio
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -91,7 +106,7 @@ public class AttachmentAudio
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -104,7 +119,8 @@ public class AttachmentAudio
             }
         }
 
-        
+
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -115,4 +131,5 @@ public class AttachmentAudio
             reader.readSkip(tag);
         }
     }
+
 }

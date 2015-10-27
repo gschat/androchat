@@ -1,20 +1,29 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
 
-import java.nio.ByteBuffer;
 
-
-/*
- * AttachmentCMD generate by gs2java,don't modify it manually
- */
-public class AttachmentCMD
+public class AttachmentCMD 
 {
 
     private  String command = "";
 
+
+
+    public AttachmentCMD(){
+
+    }
+
+
+    public AttachmentCMD(String command ) {
+    
+        this.command = command;
+    
+    }
 
 
     public String getCommand()
@@ -25,6 +34,8 @@ public class AttachmentCMD
     {
         this.command = arg;
     }
+
+
 
     public void marshal(Writer writer)  throws Exception
     {
@@ -37,7 +48,7 @@ public class AttachmentCMD
     public void unmarshal(Reader reader) throws Exception
     {
         byte __fields = reader.readByte();
-        
+
         {
             byte tag = reader.readByte();
 
@@ -50,7 +61,8 @@ public class AttachmentCMD
             }
         }
 
-        
+
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -61,4 +73,5 @@ public class AttachmentCMD
             reader.readSkip(tag);
         }
     }
+
 }

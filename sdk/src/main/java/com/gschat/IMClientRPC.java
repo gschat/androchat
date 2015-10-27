@@ -1,10 +1,10 @@
 package com.gschat;
 
-import com.gsrpc.Writer;
-
 import com.gsrpc.Reader;
 
 import java.nio.ByteBuffer;
+
+import com.gsrpc.Writer;
 
 
 /*
@@ -28,7 +28,7 @@ public final class IMClientRPC {
     }
 
     
-    public com.gsrpc.Future<Void> push(Mail arg0, final int timeout) throws Exception {
+    public void push(Mail arg0) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 
@@ -46,7 +46,7 @@ public final class IMClientRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[0] = (param);
 
@@ -56,38 +56,9 @@ public final class IMClientRPC {
         request.setParams(params);
         
 
-        com.gsrpc.Promise<Void> promise = new com.gsrpc.Promise<Void>(timeout){
-            @Override
-            public void Return(Exception e,com.gsrpc.Response callReturn){
-
-                if (e != null) {
-                    Notify(e,null);
-                    return;
-                }
-
-                try{
-
-                    if(callReturn.getException() != (byte)-1) {
-                        switch(callReturn.getException()) {
-                            
-                        default:
-                            Notify(new com.gsrpc.RemoteException(),null);
-                            return;
-                        }
-                    }
-
-                    
-                    Notify(null,null);
-                    
-                }catch(Exception e1) {
-                    Notify(e1,null);
-                }
-            }
-        };
-
-        this.net.send(request,promise);
-
-        return promise;
+        
+        this.net.post(request);
+        
     }
     
     public com.gsrpc.Future<Void> notify(int arg0, final int timeout) throws Exception {
@@ -108,7 +79,7 @@ public final class IMClientRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[0] = (param);
 
@@ -118,6 +89,7 @@ public final class IMClientRPC {
         request.setParams(params);
         
 
+        
         com.gsrpc.Promise<Void> promise = new com.gsrpc.Promise<Void>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
@@ -150,6 +122,7 @@ public final class IMClientRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
 }

@@ -1,10 +1,10 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
-
-import java.nio.ByteBuffer;
 
 
 
@@ -36,17 +36,7 @@ public final class IMClientDispatcher implements com.gsrpc.Dispatcher {
 
 
                 
-                    this.service.push(arg0);
-
-                    com.gsrpc.Response callReturn = new com.gsrpc.Response();
-                    callReturn.setID(call.getID());
-                    callReturn.setService(call.getService());
-                    callReturn.setException((byte)-1);
-
-                    
-
-                    return callReturn;
-
+                this.service.push(arg0);
                 
             }
         
@@ -63,6 +53,7 @@ public final class IMClientDispatcher implements com.gsrpc.Dispatcher {
 
 
                 
+                
                     this.service.notify(arg0);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
@@ -74,6 +65,7 @@ public final class IMClientDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
+                
                 
             }
         

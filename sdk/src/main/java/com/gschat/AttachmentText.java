@@ -7,14 +7,23 @@ import com.gsrpc.Reader;
 import java.nio.ByteBuffer;
 
 
-/*
- * AttachmentText generate by gs2java,don't modify it manually
- */
-public class AttachmentText
+public class AttachmentText 
 {
 
     private  String text = "";
 
+
+
+    public AttachmentText(){
+
+    }
+
+
+    public AttachmentText(String text ) {
+    
+        this.text = text;
+    
+    }
 
 
     public String getText()
@@ -25,6 +34,8 @@ public class AttachmentText
     {
         this.text = arg;
     }
+
+
 
     public void marshal(Writer writer)  throws Exception
     {
@@ -37,7 +48,7 @@ public class AttachmentText
     public void unmarshal(Reader reader) throws Exception
     {
         byte __fields = reader.readByte();
-        
+
         {
             byte tag = reader.readByte();
 
@@ -50,7 +61,8 @@ public class AttachmentText
             }
         }
 
-        
+
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -61,4 +73,5 @@ public class AttachmentText
             reader.readSkip(tag);
         }
     }
+
 }

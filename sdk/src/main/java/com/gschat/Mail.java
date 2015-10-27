@@ -1,16 +1,13 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
 
-import java.nio.ByteBuffer;
 
-
-/*
- * Mail generate by gs2java,don't modify it manually
- */
-public class Mail
+public class Mail 
 {
 
     private  String mailID = "";
@@ -31,6 +28,34 @@ public class Mail
 
     private  byte[] extension = new byte[0];
 
+
+
+    public Mail(){
+
+    }
+
+
+    public Mail(String mailID, int sQID, long tS, String sender, String receiver, MailType type, String content, Attachment[] attachments, byte[] extension ) {
+    
+        this.mailID = mailID;
+    
+        this.sQID = sQID;
+    
+        this.tS = tS;
+    
+        this.sender = sender;
+    
+        this.receiver = receiver;
+    
+        this.type = type;
+    
+        this.content = content;
+    
+        this.attachments = attachments;
+    
+        this.extension = extension;
+    
+    }
 
 
     public String getMailID()
@@ -114,6 +139,8 @@ public class Mail
         this.extension = arg;
     }
 
+
+
     public void marshal(Writer writer)  throws Exception
     {
         writer.writeByte((byte)9);
@@ -155,7 +182,7 @@ public class Mail
     public void unmarshal(Reader reader) throws Exception
     {
         byte __fields = reader.readByte();
-        
+
         {
             byte tag = reader.readByte();
 
@@ -168,7 +195,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -181,7 +208,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -194,7 +221,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -207,7 +234,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -220,7 +247,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -233,7 +260,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -246,7 +273,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -271,7 +298,7 @@ public class Mail
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -284,7 +311,8 @@ public class Mail
             }
         }
 
-        
+
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -295,4 +323,5 @@ public class Mail
             reader.readSkip(tag);
         }
     }
+
 }

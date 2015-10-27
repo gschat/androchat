@@ -1,10 +1,10 @@
 package com.gschat;
 
-import com.gsrpc.Reader;
-
 import java.nio.ByteBuffer;
 
 import com.gsrpc.Writer;
+
+import com.gsrpc.Reader;
 
 
 
@@ -26,6 +26,7 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
         case 0: {
 
                 
+                
                     int ret = this.service.prepare();
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
@@ -42,7 +43,7 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 
 					writer.writeUInt32(ret);
 
-					returnParam = writer.Content();
+					returnParam = writer.getContent();
 
 				}
 
@@ -52,6 +53,7 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
+                
                 
             }
         
@@ -67,6 +69,7 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 				}
 
 
+                
                 
                 try{
                 
@@ -86,7 +89,7 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 
 					writer.writeUInt64(ret);
 
-					returnParam = writer.Content();
+					returnParam = writer.getContent();
 
 				}
 
@@ -106,7 +109,7 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
                     callReturn.setID(call.getID());
                     callReturn.setService(call.getService());
                     callReturn.setException((byte)0);
-                    callReturn.setContent(writer.Content());
+                    callReturn.setContent(writer.getContent());
 
                     return callReturn;
                 } catch(UnexpectSQIDException e) {
@@ -119,10 +122,11 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
                     callReturn.setID(call.getID());
                     callReturn.setService(call.getService());
                     callReturn.setException((byte)1);
-                    callReturn.setContent(writer.Content());
+                    callReturn.setContent(writer.getContent());
 
                     return callReturn;
                 }
+                
             }
         
         case 2: {
@@ -136,17 +140,43 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
 
 				}
 
+				int arg1 = 0;
 
+				{
+
+					com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(call.getParams()[1].getContent());
+
+					arg1 = reader.readUInt32();
+
+				}
+
+
+                
                 
                 try{
                 
-                    this.service.pull(arg0);
+                    int ret = this.service.sync(arg0, arg1);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
                     callReturn.setID(call.getID());
                     callReturn.setService(call.getService());
                     callReturn.setException((byte)-1);
 
+                    
+    				byte[] returnParam;
+
+				{
+
+					com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+
+					writer.writeUInt32(ret);
+
+					returnParam = writer.getContent();
+
+				}
+
+
+                    callReturn.setContent(returnParam);
                     
 
                     return callReturn;
@@ -161,10 +191,11 @@ public final class IMServerDispatcher implements com.gsrpc.Dispatcher {
                     callReturn.setID(call.getID());
                     callReturn.setService(call.getService());
                     callReturn.setException((byte)0);
-                    callReturn.setContent(writer.Content());
+                    callReturn.setContent(writer.getContent());
 
                     return callReturn;
                 }
+                
             }
         
         }

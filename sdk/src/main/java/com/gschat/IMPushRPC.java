@@ -1,10 +1,10 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
-
-import java.nio.ByteBuffer;
 
 
 /*
@@ -46,7 +46,7 @@ public final class IMPushRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[0] = (param);
 
@@ -56,6 +56,7 @@ public final class IMPushRPC {
         request.setParams(params);
         
 
+        
         com.gsrpc.Promise<Void> promise = new com.gsrpc.Promise<Void>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
@@ -88,6 +89,7 @@ public final class IMPushRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
     public com.gsrpc.Future<Void> unregister(final int timeout) throws Exception {
@@ -100,6 +102,7 @@ public final class IMPushRPC {
 
         
 
+        
         com.gsrpc.Promise<Void> promise = new com.gsrpc.Promise<Void>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
@@ -132,6 +135,7 @@ public final class IMPushRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
 }

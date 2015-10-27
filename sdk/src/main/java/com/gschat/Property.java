@@ -1,22 +1,33 @@
 package com.gschat;
 
-import com.gsrpc.Reader;
-
 import java.nio.ByteBuffer;
 
 import com.gsrpc.Writer;
 
+import com.gsrpc.Reader;
 
-/*
- * Property generate by gs2java,don't modify it manually
- */
-public class Property
+
+public class Property 
 {
 
     private  String key = "";
 
     private  String value = "";
 
+
+
+    public Property(){
+
+    }
+
+
+    public Property(String key, String value ) {
+    
+        this.key = key;
+    
+        this.value = value;
+    
+    }
 
 
     public String getKey()
@@ -37,6 +48,8 @@ public class Property
         this.value = arg;
     }
 
+
+
     public void marshal(Writer writer)  throws Exception
     {
         writer.writeByte((byte)2);
@@ -51,7 +64,7 @@ public class Property
     public void unmarshal(Reader reader) throws Exception
     {
         byte __fields = reader.readByte();
-        
+
         {
             byte tag = reader.readByte();
 
@@ -64,7 +77,7 @@ public class Property
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -77,7 +90,8 @@ public class Property
             }
         }
 
-        
+
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -88,4 +102,5 @@ public class Property
             reader.readSkip(tag);
         }
     }
+
 }

@@ -1,10 +1,10 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
-
-import java.nio.ByteBuffer;
 
 
 /*
@@ -38,6 +38,7 @@ public final class IMServerRPC {
 
         
 
+        
         com.gsrpc.Promise<Integer> promise = new com.gsrpc.Promise<Integer>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
@@ -81,6 +82,7 @@ public final class IMServerRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
     public com.gsrpc.Future<Long> put(Mail arg0, final int timeout) throws Exception {
@@ -101,7 +103,7 @@ public final class IMServerRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[0] = (param);
 
@@ -111,6 +113,7 @@ public final class IMServerRPC {
         request.setParams(params);
         
 
+        
         com.gsrpc.Promise<Long> promise = new com.gsrpc.Promise<Long>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
@@ -178,9 +181,10 @@ public final class IMServerRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
-    public com.gsrpc.Future<Void> pull(int arg0, final int timeout) throws Exception {
+    public com.gsrpc.Future<Integer> sync(int arg0, int arg1, final int timeout) throws Exception {
 
         com.gsrpc.Request request = new com.gsrpc.Request();
 
@@ -189,7 +193,7 @@ public final class IMServerRPC {
         request.setMethod((short)2);
 
         
-        com.gsrpc.Param[] params = new com.gsrpc.Param[1];
+        com.gsrpc.Param[] params = new com.gsrpc.Param[2];
 		{
 
 			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
@@ -198,9 +202,23 @@ public final class IMServerRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[0] = (param);
+
+		}
+
+		{
+
+			com.gsrpc.BufferWriter writer = new com.gsrpc.BufferWriter();
+
+			writer.writeUInt32(arg1);
+
+			com.gsrpc.Param param = new com.gsrpc.Param();
+
+			param.setContent(writer.getContent());
+
+			params[1] = (param);
 
 		}
 
@@ -208,7 +226,8 @@ public final class IMServerRPC {
         request.setParams(params);
         
 
-        com.gsrpc.Promise<Void> promise = new com.gsrpc.Promise<Void>(timeout){
+        
+        com.gsrpc.Promise<Integer> promise = new com.gsrpc.Promise<Integer>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
 
@@ -241,7 +260,18 @@ public final class IMServerRPC {
                     }
 
                     
-                    Notify(null,null);
+					int returnParam = 0;
+
+					{
+
+						com.gsrpc.BufferReader reader = new com.gsrpc.BufferReader(callReturn.getContent());
+
+						returnParam = reader.readUInt32();
+
+					}
+
+
+                    Notify(null,returnParam);
                     
                 }catch(Exception e1) {
                     Notify(e1,null);
@@ -252,6 +282,7 @@ public final class IMServerRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
 }

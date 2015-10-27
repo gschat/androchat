@@ -7,7 +7,7 @@ import android.os.IBinder
 /**
  * GSChat background service to support persistent connection and communication with chat server
  */
-class GSChatService : Service() {
+public class GSChatService : Service() {
 
 
     override fun onCreate() {

@@ -1,16 +1,13 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
 
-import java.nio.ByteBuffer;
 
-
-/*
- * AttachmentGPS generate by gs2java,don't modify it manually
- */
-public class AttachmentGPS
+public class AttachmentGPS 
 {
 
     private  double longitude = 0;
@@ -19,6 +16,22 @@ public class AttachmentGPS
 
     private  String address = "";
 
+
+
+    public AttachmentGPS(){
+
+    }
+
+
+    public AttachmentGPS(double longitude, double latitude, String address ) {
+    
+        this.longitude = longitude;
+    
+        this.latitude = latitude;
+    
+        this.address = address;
+    
+    }
 
 
     public double getLongitude()
@@ -48,6 +61,8 @@ public class AttachmentGPS
         this.address = arg;
     }
 
+
+
     public void marshal(Writer writer)  throws Exception
     {
         writer.writeByte((byte)3);
@@ -65,7 +80,7 @@ public class AttachmentGPS
     public void unmarshal(Reader reader) throws Exception
     {
         byte __fields = reader.readByte();
-        
+
         {
             byte tag = reader.readByte();
 
@@ -78,7 +93,7 @@ public class AttachmentGPS
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -91,7 +106,7 @@ public class AttachmentGPS
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -104,7 +119,8 @@ public class AttachmentGPS
             }
         }
 
-        
+
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -115,4 +131,5 @@ public class AttachmentGPS
             reader.readSkip(tag);
         }
     }
+
 }

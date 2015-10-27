@@ -46,7 +46,7 @@ public final class IMAuthRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[0] = (param);
 
@@ -66,7 +66,7 @@ public final class IMAuthRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[1] = (param);
 
@@ -76,6 +76,7 @@ public final class IMAuthRPC {
         request.setParams(params);
         
 
+        
         com.gsrpc.Promise<Property[]> promise = new com.gsrpc.Promise<Property[]>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
@@ -155,6 +156,7 @@ public final class IMAuthRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
     public com.gsrpc.Future<Void> logoff(Property[] arg0, final int timeout) throws Exception {
@@ -181,7 +183,7 @@ public final class IMAuthRPC {
 
 			com.gsrpc.Param param = new com.gsrpc.Param();
 
-			param.setContent(writer.Content());
+			param.setContent(writer.getContent());
 
 			params[0] = (param);
 
@@ -191,6 +193,7 @@ public final class IMAuthRPC {
         request.setParams(params);
         
 
+        
         com.gsrpc.Promise<Void> promise = new com.gsrpc.Promise<Void>(timeout){
             @Override
             public void Return(Exception e,com.gsrpc.Response callReturn){
@@ -223,6 +226,7 @@ public final class IMAuthRPC {
         this.net.send(request,promise);
 
         return promise;
+        
     }
     
 }

@@ -1,22 +1,33 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
 
-import java.nio.ByteBuffer;
 
-
-/*
- * AttachmentImage generate by gs2java,don't modify it manually
- */
-public class AttachmentImage
+public class AttachmentImage 
 {
 
     private  String key = "";
 
     private  String name = "";
 
+
+
+    public AttachmentImage(){
+
+    }
+
+
+    public AttachmentImage(String key, String name ) {
+    
+        this.key = key;
+    
+        this.name = name;
+    
+    }
 
 
     public String getKey()
@@ -37,6 +48,8 @@ public class AttachmentImage
         this.name = arg;
     }
 
+
+
     public void marshal(Writer writer)  throws Exception
     {
         writer.writeByte((byte)2);
@@ -51,7 +64,7 @@ public class AttachmentImage
     public void unmarshal(Reader reader) throws Exception
     {
         byte __fields = reader.readByte();
-        
+
         {
             byte tag = reader.readByte();
 
@@ -64,7 +77,7 @@ public class AttachmentImage
             }
         }
 
-        
+
         {
             byte tag = reader.readByte();
 
@@ -77,7 +90,8 @@ public class AttachmentImage
             }
         }
 
-        
+
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -88,4 +102,5 @@ public class AttachmentImage
             reader.readSkip(tag);
         }
     }
+
 }

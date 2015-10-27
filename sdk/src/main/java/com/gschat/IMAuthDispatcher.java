@@ -1,10 +1,10 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
-
-import java.nio.ByteBuffer;
 
 
 
@@ -58,6 +58,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 
                 
+                
                 try{
                 
                     Property[] ret = this.service.login(arg0, arg1);
@@ -82,7 +83,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 				}
 
-					returnParam = writer.Content();
+					returnParam = writer.getContent();
 
 				}
 
@@ -102,7 +103,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
                     callReturn.setID(call.getID());
                     callReturn.setService(call.getService());
                     callReturn.setException((byte)0);
-                    callReturn.setContent(writer.Content());
+                    callReturn.setContent(writer.getContent());
 
                     return callReturn;
                 } catch(UserAuthFailedException e) {
@@ -115,10 +116,11 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
                     callReturn.setID(call.getID());
                     callReturn.setService(call.getService());
                     callReturn.setException((byte)1);
-                    callReturn.setContent(writer.Content());
+                    callReturn.setContent(writer.getContent());
 
                     return callReturn;
                 }
+                
             }
         
         case 1: {
@@ -146,6 +148,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
 
                 
+                
                     this.service.logoff(arg0);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
@@ -157,6 +160,7 @@ public final class IMAuthDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
+                
                 
             }
         

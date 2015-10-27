@@ -1,19 +1,23 @@
 package com.gschat;
 
+import java.nio.ByteBuffer;
+
 import com.gsrpc.Writer;
 
 import com.gsrpc.Reader;
-
-import java.nio.ByteBuffer;
 
 
 public class UnexpectSQIDException extends Exception
 {
 
 
+
+
     public UnexpectSQIDException() {
     
     }
+
+
 
 
     public void marshal(Writer writer)  throws Exception
@@ -25,6 +29,7 @@ public class UnexpectSQIDException extends Exception
     {
         byte __fields = reader.readByte();
 
+
         for(int i = 0; i < (int)__fields; i ++) {
             byte tag = reader.readByte();
 
@@ -35,4 +40,5 @@ public class UnexpectSQIDException extends Exception
             reader.readSkip(tag);
         }
     }
+
 }

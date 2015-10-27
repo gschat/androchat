@@ -1,10 +1,10 @@
 package com.gschat;
 
+import com.gsrpc.Reader;
+
 import java.nio.ByteBuffer;
 
 import com.gsrpc.Writer;
-
-import com.gsrpc.Reader;
 
 
 
@@ -36,6 +36,7 @@ public final class IMPushDispatcher implements com.gsrpc.Dispatcher {
 
 
                 
+                
                     this.service.register(arg0);
 
                     com.gsrpc.Response callReturn = new com.gsrpc.Response();
@@ -48,10 +49,12 @@ public final class IMPushDispatcher implements com.gsrpc.Dispatcher {
                     return callReturn;
 
                 
+                
             }
         
         case 1: {
 
+                
                 
                     this.service.unregister();
 
@@ -64,6 +67,7 @@ public final class IMPushDispatcher implements com.gsrpc.Dispatcher {
 
                     return callReturn;
 
+                
                 
             }
         
