@@ -11,12 +11,13 @@
 
     "properties":{
         "gsrpc":{
-            "main":["github.com/gschat/gschat/gschat.gs"]
+            "main":["github.com/gsrpc/gsrpc","github.com/gschat/gschat/gschat.gs","github.com/gschat/gschat/shared.gs"]
         },
 
         "jvmrpc":{
             "main":{
-                "output":"./sdk/src/main/java"
+                "output":"./sdk/src/main/java",
+                "skips":["gsrpc/[^/]*\\.gs"]
             }
         }
     }
